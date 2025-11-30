@@ -63,7 +63,7 @@ console.log(user);
 // // Port number
 // server.listen(5000, ()=>{
 //     console.log('Server listning on port 5000...');
-    
+
 // });
 
 
@@ -74,5 +74,28 @@ console.log(user);
 
 
 
+
+
+// const { readFileSync, writeFileSync } = require('fs')
+// console.log('start');
+// const first = readFileSync('./content/fs.txt', 'utf-8')
+// const second = readFileSync('./content/subFolder/fs2.txt', 'utf-8')
+
+// writeFileSync(
+//     './content/result-async.txt',
+//     `Here is the result: ${first}, ${second}`
+// )
+
+
+
+
+// Writng big data
+/*    
+const { writeFileSync } = require('fs')
+
+for (let i = 0; i < 100000; i++) {
+    writeFileSync('./content/big.txt', `${i}: Hello World\n`, { flag: 'a' });
+}
+*/
 
 
