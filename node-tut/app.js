@@ -41,30 +41,8 @@ console.log(user);
 // console.log("I will run first");
 
 
-// const http = require('http');
 
-// // req => request : res = response
-// const server = http.createServer((req, res) => {
-//     if (req.url === '/') {
-//         res.end("Welcome to homepage");
-//     }
-//     else if (req.url === '/about') {
 
-//         // BLOCK code (will run synchronously 10^6 times)
-//         for (let index = 0; index < 1000; index++) {
-//             for (let j = 0; j < 1000; j++) {
-//                 console.log(`${index} || ${j}`);
-//             }
-//         }
-//         res.end("About section");
-//     }
-// });
-
-// // Port number
-// server.listen(5000, ()=>{
-//     console.log('Server listning on port 5000...');
-
-// });
 
 
 
