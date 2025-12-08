@@ -1,20 +1,32 @@
-const http = require('http');
-const { readFileSync } = require('fs');
+// Adding express
+const express = require('express')
 
-const homepage = readFileSync('./index.html')
+// Creating app with express
+const app = express()
 
-// req => request : res = response
-const server = http.createServer((req, res) => {
-    console.log("User hit the server");
-
-    res.writeHead(200, {
-        "content-type": "text/html"
-    })
-    res.write(homepage);
+// Method to get the resource from server
+app.get('/', (req, res) => {
+    console.log("User hit the resource");
+    console.log(req.url);
     
-    // Indicate that all headers & body sent down (page will load if it is missing)
-    res.end();
-});
+    res.status(200).send("Home Page")
+})
 
-// Setting server to port number
-server.listen(5000);
+app.get('/about', (req, res) => {
+    console.log("User hit the resource");
+    console.log(req.url);
+        
+    res.status(200).send("About Page")
+})
+
+
+// checking all routes to find if requested one is present or not
+app.all('*', (req, res) => {
+    res.status(404).send("Resource Not Found!!")
+})
+
+
+// Starting server
+app.listen(5000, () => {
+    console.log("Express server is listning on port");
+});

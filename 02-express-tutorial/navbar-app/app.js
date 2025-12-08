@@ -1,9 +1,15 @@
 const http = require('http');
 const { readFileSync } = require('fs');
+const path = require('path');
 
-const homepage = readFileSync('./index.html')
-const homeStyle = readFileSync('./styles.css')
-const project = readFileSync('./projects.html')
+// App will crash for these 3 if these files are on other folder
+// const homepage = readFileSync('./index.html')
+// const homeStyle = readFileSync('./styles.css')
+// const project = readFileSync('./projects.html')
+
+const homepage = readFileSync(path.resolve(__dirname,  'index.html'))
+const homeStyle = readFileSync(path.resolve(__dirname,  'styles.css'))
+const project = readFileSync(path.resolve(__dirname,  'projects.html'))
 
 // req => request : res = response
 const server = http.createServer((req, res) => {
@@ -28,7 +34,7 @@ const server = http.createServer((req, res) => {
         // Indicate that all headers & body sent down (page will load if it is missing)
         res.end();
     }
-    else if (url === '/project.html') {
+    else if (url === '/projects.html') {
         res.writeHead(200, {
             "content-type": "text/html"
         })
@@ -48,4 +54,7 @@ const server = http.createServer((req, res) => {
 });
 
 // Setting server to port number
-server.listen(5000);
+// server.listen(5000);
+server.listen(5000, () => {
+    console.log('Server is online and listening on port 5000');
+});
