@@ -1,3 +1,10 @@
+/*
+- Functions that execute during request of server.
+- Have acces to req, res
+- Everywhere in express.js
+- next is a must in middleware
+*/
+
 // Adding express
 const express = require('express')
 
