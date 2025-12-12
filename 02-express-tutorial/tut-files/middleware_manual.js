@@ -3,6 +3,10 @@
 - Have acces to req, res
 - Everywhere in express.js
 - next is a must in middleware
+
+1. Current method must be in another file for more readability and control
+2. What if we have 50 routes, we need a functionality that automatically add it to that 50 routes
+
 */
 
 // Adding express
