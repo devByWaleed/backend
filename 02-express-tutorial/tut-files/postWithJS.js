@@ -32,16 +32,6 @@ app.post('/api/people', (req, res) => {
     res.status(201).send({success: true, person:name})
 })
 
-app.post('/api/postman/people', (req, res) => {
-    const {name} = req.body
-
-    if (!name) {
-        return res
-        .status(400)
-        .json({success:true, msg: 'Please provide name'})
-    }
-    res.status(201).send({success:true, data: [...people, name]})
-})
 
 app.post('/login', (req, res) => {
     console.log(req.body);

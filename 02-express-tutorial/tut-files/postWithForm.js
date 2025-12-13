@@ -14,34 +14,11 @@ app.use(express.static('./methods-public'))
 
 // Parse form data (built-in middleware)
 app.use(express.urlencoded({ extended: false }))
-app.use(express.json())
 
 app.get('/api/people', (req, res) => {
     res.status(200).json({success: true, data:people})
 });
 
-
-app.post('/api/people', (req, res) => {
-    // res.status(201).send('Success')
-
-    const {name} = req.body
-    
-    if (!name) {
-        return res.status(400).json({success: false, msg:"Please provide value"})
-    }
-    res.status(201).send({success: true, person:name})
-})
-
-app.post('/api/postman/people', (req, res) => {
-    const {name} = req.body
-
-    if (!name) {
-        return res
-        .status(400)
-        .json({success:true, msg: 'Please provide name'})
-    }
-    res.status(201).send({success:true, data: [...people, name]})
-})
 
 app.post('/login', (req, res) => {
     console.log(req.body);
