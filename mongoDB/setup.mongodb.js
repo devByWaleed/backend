@@ -1,6 +1,7 @@
 // Function To Use Database
 use('ecommerce')
 
+
 // Inserting Product's Info
 db.products.insertMany([
     {
