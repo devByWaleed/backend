@@ -1,11 +1,18 @@
-import React, { useState } from 'react'
+import axios from 'axios'
+import { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 
 const Users = () => {
-    const [users, setUsers] = useState([{
-        Name: "waleed", Email: "abc@gmail.com", Age: 20
-    }])
 
+    // State to set data, we get from API
+    const [users, setUsers] = useState([{}])
+
+    // useEffect to render app on change 
+    useEffect(() => {
+        axios.get('http://localhost:3001')
+        .then(result => setUsers(result.data))
+        .catch(err => console.log(err))
+    })
 
     return (
         <div className='d-flex vh-100 bg-primary justify-content-center align-items-center'>
@@ -25,9 +32,9 @@ const Users = () => {
                         {
                             users.map((user) => {
                                 return <tr>
-                                    <td>{user.Name}</td>
-                                    <td>{user.Email}</td>
-                                    <td>{user.Age}</td>
+                                    <td>{user.name}</td>
+                                    <td>{user.email}</td>
+                                    <td>{user.age}</td>
                                     <td>
                                         <Link to="/update" className="btn btn-success">Edit</Link>
                                         <button>Delete</button>
