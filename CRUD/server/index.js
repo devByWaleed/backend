@@ -21,20 +21,57 @@ app.use(express.json())
 mongoose.connect("mongodb://127.0.0.1:27017/crud")
 
 
-// Post API to add data
+// Post method to add data
 app.post('/createUser', (req, res) => {
     UserModel.create(req.body)
-    .then(users => res.json(users))
-    .catch(err => res.json(err))
+        .then(users => res.json(users))
+        .catch(err => res.json(err))
 })
 
 
-// Get API to get data
+// Get method to get data (Read operation)
 app.get('/', (req, res) => {
     // Empty for all users
     UserModel.find({})
-    .then(users => res.json(users))
-    .catch(err => res.json(err))
+        .then(users => res.json(users))
+        .catch(err => res.json(err))
+})
+
+
+// Get method to get data (To display on form)
+app.get('/getUser/:id', (req, res) => {
+    const id = req.params.id
+
+    // Empty for all users
+    UserModel.findById({ _id: id })
+        .then(users => res.json(users))
+        .catch(err => res.json(err))
+})
+
+
+// Update method to update data
+app.put('/updateUser/:id', (req, res) => {
+    const id = req.params.id
+
+    // Empty for all users
+    UserModel.findByIdAndUpdate({ _id: id }, {
+        name: req.body.name,
+        email: req.body.email,
+        age: req.body.age
+    })
+        .then(users => res.json(users))
+        .catch(err => res.json(err))
+})
+
+
+// Delete method to delete data
+app.delete('/deleteUser/:id', (req, res) => {
+    const id = req.params.id
+
+    // Empty for all users
+    UserModel.findByIdAndDelete({ _id: id })
+        .then(res => res.json(res))
+        .catch(err => res.json(err))
 })
 
 

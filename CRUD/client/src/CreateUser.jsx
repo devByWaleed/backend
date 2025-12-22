@@ -12,17 +12,18 @@ const CreateUser = () => {
     // Navigator for component navigation
     const navigate = useNavigate()
 
-    // Method to post date to data-base through backend
+
+    // Function to send post request
     const handleSubmit = (e) => {
         e.preventDefault()
-        axios.post('http://localhost:3001/createUser', {name, email, age})
-        .then(result => {
-            console.log(result)
-            
-            // Navigate back to homepage right after adding data
-            navigate('/')
-        })
-        .catch(err => console.log(err))
+        axios.post('http://localhost:3001/createUser', { name, email, age })
+            .then(result => {
+                console.log(result)
+
+                // Navigate back to homepage right after adding data
+                navigate('/')
+            })
+            .catch(err => console.log(err))
     }
 
     return (

@@ -8,7 +8,6 @@ import Users from './Users'
 
 
 function App() {
-  const [count, setCount] = useState(0)
 
   return (
     <div>
@@ -16,8 +15,8 @@ function App() {
         <Routes>
           <Route path="/" element={<Users />}></Route>
           <Route path="/create" element={<CreateUser />}></Route>
-          <Route path="/update" element={<UpdateUser />}></Route>
-        </Routes>      
+          <Route path="/update/:id" element={<UpdateUser />}></Route>
+        </Routes>
       </BrowserRouter>
     </div>
   )
