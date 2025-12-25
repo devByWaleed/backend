@@ -1,4 +1,3 @@
-import { verify } from "jsonwebtoken"
 import mongoose from "mongoose"
 
 // Creating user schema
@@ -17,7 +16,7 @@ const UserSchema = new mongoose.Schema({
 
 
 // .model gets collection name & schema
-const UserModel = mongoose.models.user || mongoose.model("user", UserSchema)
+const UserModel = mongoose.models.user || mongoose.model("user", UserSchema, "accounts")
 
 
 // Exporting the model
