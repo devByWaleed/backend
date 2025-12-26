@@ -31,7 +31,7 @@ const Navbar = () => {
   const logout = async () => {
     try {
       axios.defaults.withCredentials = true
-      const { data } = await axios.get(backendURL + "/api/auth/logout")
+      const { data } = await axios.post(backendURL + "/api/auth/logout")
 
       data.success && setIsLoggedIn(false)
       data.success && setUserData(false)
