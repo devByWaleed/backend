@@ -1,6 +1,11 @@
+import { useContext } from 'react'
 import { assets } from '../assets/assets'
+import { AppContent } from '../context/AppContext'
 
 const Header = () => {
+    const { userData } = useContext(AppContent)
+
+
     return (
         <div className="flex flex-col items-center justify-center min-h-[60vh] px-4 text-center">
             {/* Profile Image with subtle border/glow */}
@@ -14,7 +19,7 @@ const Header = () => {
 
             {/* Heading with Hand Wave */}
             <h1 className="flex items-center gap-2 mb-2 text-3xl font-bold text-gray-800 sm:text-5xl">
-                Hey! Developer
+                Hey! {userData ? userData.name : "Developer"}!
                 <img src={assets.hand_wave} alt="Wave" className="w-8 sm:w-12 animate-bounce" />
             </h1>
 
