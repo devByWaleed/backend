@@ -1,0 +1,58 @@
+TypeScript:-
+
+- Offers additional features to JavaScript  including static type
+- Using types is completely optional
+- It compiled down to JavaScript
+- Can use in both frontend & backend
+- Includes most ES6, ES7 (classes, arrow functions , etc)
+- Types from 3rd party libraries can be added with type definition
+
+
+----------------------------------------------------------------
+
+
+Pros:-
+- Most Robust
+- Easy bug spotting
+- Predictability
+- Readability
+- Popular
+
+Cons:-
+- More code to write
+- More to learn
+- Compilation required
+- Not true static type
+
+
+----------------------------------------------------------------
+
+
+Configuration:-
+
+1. Install TypeScript (Locally)
+npm install typescript
+
+
+2. Install tsconfig.ts
+npx tsc --init
+
+Un-comment dist and src lines
+
+
+3. Move ts files to src and your js files will be in dist folder
+
+
+4. For running ts file
+npx tsc src/filename.ts
+
+
+5. For directly running ts files, install ts-node
+npm install ts-node
+
+
+6. Run this, make sure filepath is correct
+npx ts-node filename.ts
+
+
+----------------------------------------------------------------

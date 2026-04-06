@@ -1,2 +1,2 @@
-# Dependencies
-node-tut/node_modules/
+# Untrack all node_modules folders
+node_modules/
