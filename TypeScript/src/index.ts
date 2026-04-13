@@ -51,6 +51,7 @@ console.log(user);
 
 
 // 2nd option
+/*
 type User = {
     id: number,
     name: string
@@ -62,3 +63,59 @@ const user: User = {
 }
 
 console.log(user);
+*/
+
+
+// Type Assertion
+/*
+let cid: any = 1
+console.log(typeof (cid));
+
+let customerID = <number>cid
+console.log(typeof (customerID));
+*/
+
+
+// Function With Types, No Type will throw error
+/*
+function addNum(x: number, y: number): number {
+    return x + y
+}
+
+console.log(addNum(5, 6));
+*/
+
+
+
+// Function With Any Types, No Type will throw error
+/*
+function addNum(message: string | number): void {
+    console.log(message)
+}
+
+addNum("Hello World");
+*/
+
+
+
+// Interfaces, can be used in objects only
+/*
+interface User {
+    id: number,
+    name: string,
+
+    // Property, to be optional
+    age?: number
+}
+
+const user: User = {
+    id: 1,
+    name: "Waleed"
+}
+
+console.log(user);
+*/
+
+
+
+// Interfaces With Functions
