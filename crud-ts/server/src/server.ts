@@ -25,8 +25,3 @@ app.use('/api/user', userRouter)
 app.listen(4000, () => {
     console.log("Server is running on port 4000!");
 });
-
-
-//  npx tsc --watch
-//  npx tsc
-// node dist/server.js

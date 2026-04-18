@@ -13,7 +13,7 @@ const userRouter: Router = express.Router();
 // Public routes
 userRouter.post('/create-user', createUser);
 userRouter.get('/get-user', getUser);
-userRouter.put('/update-user', updateUser);
-userRouter.delete('/delete-user', deleteUser);
+userRouter.put('/update-user/:id', updateUser);
+userRouter.delete('/delete-user/:id', deleteUser);
 
 export default userRouter;

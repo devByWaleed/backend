@@ -25,8 +25,12 @@ export const createUser = async (req, res) => {
         });
     }
     catch (error) {
-        const errorMessage = error instanceof Error ? error.message : "Internal Server Error";
-        return res.json({ success: false, message: errorMessage });
+        // FIX: Never pass the 'error' object itself to res.json()
+        // Only pass the message string or a custom object
+        return res.json({
+            success: false,
+            message: error.message || "Internal Server Error"
+        });
     }
 };
 // Read Controller Function
@@ -41,42 +45,58 @@ export const getUser = async (req, res) => {
         }
         return res.json({
             success: true,
+            message: "Data Fetched Successfully",
             users,
         });
     }
     catch (error) {
-        const errorMessage = error instanceof Error ? error.message : "Internal Server Error";
-        return res.json({ success: false, message: errorMessage });
+        // FIX: Never pass the 'error' object itself to res.json()
+        // Only pass the message string or a custom object
+        return res.json({
+            success: false,
+            message: error.message || "Internal Server Error"
+        });
     }
 };
 // Update Controller Function
 export const updateUser = async (req, res) => {
     try {
         const id = req.params.id;
-        // const { name, email, age } = req.body;
-        const updatedData = UserModel.findByIdAndUpdate({ _id: id }, {
-            name: req.body.name,
-            email: req.body.email,
-            age: req.body.age
-        });
+        const { name, email, age } = req.body;
+        const updatedUser = await UserModel.findByIdAndUpdate({ _id: id }, { name, email, age });
         return res.json({
             success: true,
-            updatedData,
+            message: "User Updated Successfully",
+            updatedUser
         });
     }
     catch (error) {
-        const errorMessage = error instanceof Error ? error.message : "Internal Server Error";
-        return res.json({ success: false, message: errorMessage });
+        // FIX: Never pass the 'error' object itself to res.json()
+        // Only pass the message string or a custom object
+        return res.json({
+            success: false,
+            message: error.message || "Internal Server Error"
+        });
     }
 };
 // Update Controller Function
 export const deleteUser = async (req, res) => {
-    const id = req.params.id;
-    // Empty for all users
-    await UserModel.findByIdAndDelete({ _id: id });
-    return res.json({
-        success: true,
-        message: "User Deleted Successfully",
-    });
+    try {
+        const id = req.params.id;
+        // Empty for all users
+        await UserModel.findByIdAndDelete({ _id: id });
+        return res.json({
+            success: true,
+            message: "User Deleted Successfully",
+        });
+    }
+    catch (error) {
+        // FIX: Never pass the 'error' object itself to res.json()
+        // Only pass the message string or a custom object
+        return res.json({
+            success: false,
+            message: error.message || "Internal Server Error"
+        });
+    }
 };
 //# sourceMappingURL=userController.js.map
