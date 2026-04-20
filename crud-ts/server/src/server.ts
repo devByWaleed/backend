@@ -1,7 +1,6 @@
 // Import
 import express from "express";
 import type { Request, Response } from "express"; // Use 'import type' for interfaces
-import mongoose from "mongoose";
 import cors from "cors";
 import userRouter from "./routes/userRoutes.js";
 import connectDB from "./config/mongodb.js";
@@ -9,14 +8,17 @@ import connectDB from "./config/mongodb.js";
 
 // Configuration
 const app = express();
-app.use(cors());
-app.use(express.json());
-
 
 // Connect Database
 connectDB()
 
 
+// Configuration
+app.use(express.json());
+app.use(cors());
+
+
+// API endpoints
 app.get('/', (req: Request, res: Response) => res.send("API Working!!!"))
 app.use('/api/user', userRouter)
 

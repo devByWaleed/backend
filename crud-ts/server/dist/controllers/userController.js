@@ -58,6 +58,32 @@ export const getUser = async (req, res) => {
         });
     }
 };
+// Read Controller Function
+export const getUserByID = async (req, res) => {
+    const id = req.params.id;
+    try {
+        const user = await UserModel.findById({ _id: id });
+        // if (!users) {
+        //     return res.json({
+        //         success: false,
+        //         message: "User not found"
+        //     })
+        // }
+        return res.json({
+            success: true,
+            message: "User Data Fetched",
+            user,
+        });
+    }
+    catch (error) {
+        // FIX: Never pass the 'error' object itself to res.json()
+        // Only pass the message string or a custom object
+        return res.json({
+            success: false,
+            message: error.message || "Internal Server Error"
+        });
+    }
+};
 // Update Controller Function
 export const updateUser = async (req, res) => {
     try {

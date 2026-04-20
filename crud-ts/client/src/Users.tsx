@@ -8,11 +8,15 @@ const Users = () => {
     // Initialize state with the User type array
     const [users, setUsers] = useState<User[]>([]);
 
+    // Read operation function
     const fetchUsers = async () => {
         try {
             const response = await axios.get('http://localhost:4000/api/user/get-user');
-            // Assuming your backend sends { success: true, users: [...] }
-            setUsers(response.data.users || response.data);
+            // Backend sends { success: true, users: [...] }
+
+            if (response.data.users) {
+                setUsers(response.data.users);
+            }
         } catch (err) {
             console.error("Fetch Error:", err);
         }
@@ -22,9 +26,11 @@ const Users = () => {
         fetchUsers();
     }, []);
 
+
+    // Delete operation function
     const handleDelete = async (id: string) => {
         try {
-            await axios.delete(`http://localhost:4000/api/user/delete-user/${id}`);
+            await axios.delete("http://localhost:4000/api/user/delete-user/" + id);
             // Instead of reloading the page, filter the local state for speed
             setUsers(users.filter(user => user._id !== id));
         } catch (err) {

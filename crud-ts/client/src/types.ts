@@ -1,3 +1,4 @@
+// Interface matching MongoDB Model
 export interface User {
     _id: string;
     name: string;
@@ -5,6 +6,8 @@ export interface User {
     age: string;
 }
 
+
+// Interface matching API response properties
 export interface ApiResponse {
     success: boolean;
     message: string;
