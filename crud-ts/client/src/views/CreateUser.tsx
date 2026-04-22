@@ -1,10 +1,10 @@
-import { useState, type FC } from 'react'
+import React, { useState } from 'react'
 import axios from 'axios'
 import { useNavigate } from 'react-router-dom'
-import type { User } from './types'
+import type { ApiResponse } from '../types'
+import toast from 'react-hot-toast'
 
-const CreateUser: FC<User> = () => {
-
+const CreateUser: React.FC = () => {
     // States for get data
     const [name, setName] = useState<string>("")
     const [email, setEmail] = useState<string>("")
@@ -13,21 +13,20 @@ const CreateUser: FC<User> = () => {
     // Navigator for component navigation
     const navigate = useNavigate()
 
-
     // Function to send post request
-    const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    const handleSubmit = async (e: React.SyntheticEvent) => {
         e.preventDefault()
 
         try {
-            const result = await axios.post("http://localhost:4000/api/user/create-user", { name, email, age })
-            console.log(result.data);
+            const { data } = await axios.post<ApiResponse>("http://localhost:4000/api/user/create-user", { name, email, age })
 
             // Navigate back to homepage right after adding data
-            if (result.data.success) {
+            if (data.success) {
+                toast.success(data.message)
                 navigate('/');
             }
-        } catch (error) {
-            console.error("Error creating user:", error);
+        } catch (error: any) {
+            toast.error(error.message)
         }
 
     }
@@ -41,6 +40,7 @@ const CreateUser: FC<User> = () => {
                     <div className="mb-4">
                         <label className="block mb-1 font-medium" htmlFor="name">Name</label>
                         <input
+                            required
                             type="text"
                             id="name"
                             placeholder="Enter Name"
@@ -53,6 +53,7 @@ const CreateUser: FC<User> = () => {
                     <div className="mb-4">
                         <label className="block mb-1 font-medium" htmlFor="email">Email</label>
                         <input
+                            required
                             type="email"
                             id="email"
                             placeholder="Enter Email"
@@ -65,7 +66,8 @@ const CreateUser: FC<User> = () => {
                     <div className="mb-4">
                         <label className="block mb-1 font-medium" htmlFor="age">Age</label>
                         <input
-                            type="text"
+                            required
+                            type="number"
                             id="age"
                             placeholder="Enter Age"
                             className="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
@@ -74,9 +76,14 @@ const CreateUser: FC<User> = () => {
                         />
                     </div>
 
-                    <button className="bg-green-600 hover:bg-green-700 text-white font-bold py-2 px-4 rounded transition duration-200">
-                        Submit
-                    </button>
+                    <div className="flex gap-2">
+                        <button type="submit" className="flex-1 bg-green-600 hover:bg-green-700 text-white font-bold py-2 px-4 rounded transition">
+                            Add
+                        </button>
+                        <button type="button" onClick={() => navigate('/')} className="flex-1 bg-gray-200 hover:bg-gray-300 text-gray-800 font-bold py-2 px-4 rounded transition">
+                            Cancel
+                        </button>
+                    </div>
                 </form>
             </div>
         </div>

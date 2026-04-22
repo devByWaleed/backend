@@ -62,7 +62,7 @@ export const getUser = async (req, res) => {
 export const getUserByID = async (req, res) => {
     const id = req.params.id;
     try {
-        const user = await UserModel.findById({ _id: id });
+        const userByID = await UserModel.findById({ _id: id });
         // if (!users) {
         //     return res.json({
         //         success: false,
@@ -72,7 +72,7 @@ export const getUserByID = async (req, res) => {
         return res.json({
             success: true,
             message: "User Data Fetched",
-            user,
+            userByID,
         });
     }
     catch (error) {
@@ -89,7 +89,7 @@ export const updateUser = async (req, res) => {
     try {
         const id = req.params.id;
         const { name, email, age } = req.body;
-        const updatedUser = await UserModel.findByIdAndUpdate({ _id: id }, { name, email, age });
+        const updatedUser = await UserModel.findByIdAndUpdate({ _id: id }, { name, email, age }, { new: true, runValidators: true });
         return res.json({
             success: true,
             message: "User Updated Successfully",

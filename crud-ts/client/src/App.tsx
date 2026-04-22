@@ -1,8 +1,8 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import { Toaster } from 'react-hot-toast'
-import CreateUser from './CreateUser'
-import UpdateUser from './UpdateUser'
-import Users from './Users'
+import CreateUser from './views/CreateUser'
+import UpdateUser from './views/UpdateUser'
+import Users from './views/Users'
 
 function App() {
   return (

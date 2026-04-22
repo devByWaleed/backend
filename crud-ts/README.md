@@ -1,73 +1,120 @@
-# React + TypeScript + Vite
+# TypeScript Project Setup
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## Frontend Setup
 
-Currently, two official plugins are available:
-
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
-
-## React Compiler
-
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
-
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
-
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+### Command to create a React in Typescript project
+```bash
+npm create vite@latest client -- --template react-ts
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+```bash
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
 ```
+
+
+
+
+
+
+
+
+
+## Backend Setup
+
+### 1) Initialize `package.json`
+```bash
+npm init -y
+```
+
+### 2) Command to setup TypeScript for backend
+```bash
+npm install typescript ts-node @types/express @types/node @types/mongoose @types/cors --save-dev
+```
+
+### 3) Initialize `tsconfig.json`
+```bash
+npx tsc --init 
+```
+
+### 4) `tsconfig.json` configuration
+
+Inside `"compilerOptions"`, these should be enabled
+
+```json
+"rootDir": "./src",
+"outDir": "./dist",
+"types": [
+  "node"
+],
+"strict": true,
+"module": "nodenext",
+"target": "esnext",
+```
+
+And right after it, add these
+```json
+"include": [
+  "src/**/*"
+],
+"exclude": [
+  "node_modules",
+  "dist"
+]
+```
+
+### 5) Install necessary packages (for JS version)
+```bash
+npm install express mongoose cors nodemon
+```
+
+### 6) Setup Folder Structure
+1. Create `src` & `dist` folder in `server` folder.
+2. Create `config`, `controllers`, `models` & `routes`. This may be more
+3. Your final structure will for backend `server` folder be like this
+```text
+├── dist/                 # Compiled files
+│   ├── config/
+│   ├── controllers/
+│   ├── models/
+│   ├── routes/
+│   ├── ...
+│   └── server.js
+├── node_modules/
+├── src/                   # Source files
+│   ├── config/
+│   ├── controllers/
+│   ├── models/
+│   ├── routes/
+│   ├── ...
+│   └── server.ts
+├── tsconfig.json
+├── .tsbuildinfo
+├── package.json
+├── package-lock.json
+```
+
+### 6) Setup `scripts` in `package.json`
+
+```json
+"scripts": {
+  "build": "tsc",
+  "watch": "tsc --watch",
+  "dev": "nodemon dist/server.js",
+  "start": "node dist/server.js"
+},
+```
+> Nodemon must be installed for continuous running.
+
+Now we need 3 terminals, work as below
+
+```bash
+# For Frontend app
+npm run dev
+
+# For Backend server
+npm run dev
+
+# For TS -> JS conversion
+npm run watch
+```
+> Whenever we change `TS` files, it's respective `JS` version will be created in `dist` folder.

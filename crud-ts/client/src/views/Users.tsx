@@ -1,24 +1,25 @@
 import axios from 'axios';
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import type { User } from './types'
+import type { User } from '../types'
+import toast from 'react-hot-toast';
 
-
-const Users = () => {
+const Users: React.FC = () => {
     // Initialize state with the User type array
     const [users, setUsers] = useState<User[]>([]);
 
     // Read operation function
     const fetchUsers = async () => {
         try {
-            const response = await axios.get('http://localhost:4000/api/user/get-user');
-            // Backend sends { success: true, users: [...] }
+            const { data } = await axios.get("http://localhost:4000/api/user/get-user");
 
-            if (response.data.users) {
-                setUsers(response.data.users);
+            // Success
+            if (data.success) {
+                toast.success(data.message)
+                setUsers(data.users);
             }
-        } catch (err) {
-            console.error("Fetch Error:", err);
+        } catch (error: any) {
+            toast.error(error.message)
         }
     };
 
@@ -30,11 +31,12 @@ const Users = () => {
     // Delete operation function
     const handleDelete = async (id: string) => {
         try {
-            await axios.delete("http://localhost:4000/api/user/delete-user/" + id);
+            const { data } = await axios.delete("http://localhost:4000/api/user/delete-user/" + id);
             // Instead of reloading the page, filter the local state for speed
             setUsers(users.filter(user => user._id !== id));
-        } catch (err) {
-            console.error("Delete Error:", err);
+            toast.success(data.message)
+        } catch (error: any) {
+            toast.error(error.message)
         }
     };
 

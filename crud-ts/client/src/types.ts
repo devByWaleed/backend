@@ -3,14 +3,15 @@ export interface User {
     _id: string;
     name: string;
     email: string;
-    age: string;
+    age: number;
 }
 
 
-// Interface matching API response properties
+// Interface matching Data we receive from API
 export interface ApiResponse {
     success: boolean;
     message: string;
-    users?: User[];
-    updatedData?: User;
+    users: User[];
+    userByID: User;
+    updatedUser: User;
 }

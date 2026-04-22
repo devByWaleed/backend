@@ -1,55 +1,56 @@
-import React, { useState, useEffect, type FC } from 'react'
+import React, { useState, useEffect } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
 import axios from 'axios'
-import type { User } from './types'
+import type { ApiResponse } from '../types'
+import toast from 'react-hot-toast'
 
-const UpdateUser: FC<User> = () => {
-    const { id } = useParams()
+const UpdateUser: React.FC = () => {
+    const { id } = useParams<{ id: string }>()
     const navigate = useNavigate()
 
-    // 1. IMPORTANT: Use empty strings as initial state to prevent "controlled/uncontrolled" error
     const [name, setName] = useState<string>("")
     const [email, setEmail] = useState<string>("")
-    const [age, setAge] = useState<string | number>("") // Allow string for the input field
+    const [age, setAge] = useState<number>(0)
 
-    // 2. Optimized Fetch with proper fallbacks
     useEffect(() => {
         const fetchUserData = async () => {
             try {
-                const response = await axios.get(`http://localhost:4000/api/user/data/${id}`)
-                const data = response.data;
+                const { data } = await axios.get<ApiResponse>("http://localhost:4000/api/user/data/" + id)
 
-                // If the field is null/undefined in DB, set to "" so the input stays controlled
-                setName(data.name ?? "");
-                setEmail(data.email ?? "");
-                setAge(data.age ?? "");
-            } catch (err) {
-                console.error("Error fetching user data:", err)
+                // Setting data in respective fields
+                setName(data.userByID.name)
+                setEmail(data.userByID.email)
+                setAge(data.userByID.age)
+
+                toast.success(data.message)
+            } catch (error: any) {
+                toast.error(error.message)
             }
         }
         if (id) fetchUserData()
     }, [id])
 
-    const handleUpdate = async (e: React.FormEvent<HTMLFormElement>) => {
+
+    const handleUpdate = async (e: React.SyntheticEvent) => {
         e.preventDefault()
-
-        // Construct the object explicitly to ensure no field is undefined
-        const updatedUser = {
-            name: name,
-            email: email,
-            age: Number(age)
-        }
-
         try {
-            const result = await axios.put(`http://localhost:4000/api/user/update-user/${id}`, updatedUser)
+            // Send all 3 fields so the others don't become empty
+            const updatedData = { name, email, age: Number(age) }
 
-            // Check for result.data.success OR status 200 depending on your backend
-            if (result.status === 200 || result.data.success) {
+            const { data } = await axios.put<ApiResponse>("http://localhost:4000/api/user/update-user/" + id, updatedData)
+
+            // Setting data in respective fields
+            setName(data.updatedUser.name)
+            setEmail(data.updatedUser.email)
+            setAge(data.updatedUser.age)
+
+            // Success
+            if (data.success) {
+                toast.success(data.message)
                 navigate('/')
             }
-        } catch (error) {
-            console.error("Update Error:", error);
-            alert("Failed to update user.");
+        } catch (error: any) {
+            toast.error(error.message)
         }
     }
 
@@ -62,6 +63,7 @@ const UpdateUser: FC<User> = () => {
                     <div className="mb-4">
                         <label className="block mb-1 font-medium text-gray-700">Name</label>
                         <input
+                            required
                             type="text"
                             placeholder="Enter Name"
                             className="w-full border border-gray-300 rounded px-3 py-2 focus:ring-2 focus:ring-blue-500 outline-none"
@@ -73,6 +75,7 @@ const UpdateUser: FC<User> = () => {
                     <div className="mb-4">
                         <label className="block mb-1 font-medium text-gray-700">Email</label>
                         <input
+                            required
                             type="email"
                             placeholder="Enter Email"
                             className="w-full border border-gray-300 rounded px-3 py-2 focus:ring-2 focus:ring-blue-500 outline-none"
@@ -84,10 +87,11 @@ const UpdateUser: FC<User> = () => {
                     <div className="mb-4">
                         <label className="block mb-1 font-medium text-gray-700">Age</label>
                         <input
+                            required
                             type="number"
                             placeholder="Enter Age"
                             className="w-full border border-gray-300 rounded px-3 py-2 focus:ring-2 focus:ring-blue-500 outline-none"
-                            onChange={e => setAge(e.target.value)}
+                            onChange={e => setAge(Number(e.target.value))}
                             value={age}
                         />
                     </div>
